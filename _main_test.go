@@ -2,11 +2,13 @@
 /*
 
 roost_feedback [3/26/2025, 8:17:19 AM]:Please identify the appropriate errors and make this file fully compilable with zero errors even if something needs to be commented or remove.\n\n
+
+roost_feedback [3/26/2025, 8:24:11 AM]:not able to install project due to error: found packages main (main.go) and golang_calculator (main_test.go) in /var/tmp/Roost/RoostGPT/go-calculator/ba8df626-8e42-437d-a4e2-fbbd5a65d837/source/golang_calculator\n\nfix this error.
 */
 
 // ********RoostGPT********
 
-package golang_calculator
+package main
 
 import (
 	"fmt"
@@ -19,9 +21,7 @@ import (
 
 var osExit = os.Exit
 
-// Updated TestStringToFloat64
 func TestStringToFloat64(t *testing.T) {
-
 	testCases := []struct {
 		name          string
 		input         string
@@ -96,7 +96,7 @@ func TestStringToFloat64(t *testing.T) {
 			defer func() {
 				if r := recover(); r != nil {
 					if !tc.expectPanic {
-						t.Fail()
+						t.Errorf("Unexpected panic: %v", r)
 					}
 					if tc.expectedError != "" && !strings.Contains(fmt.Sprintf("%v", r), tc.expectedError) {
 						t.Errorf("Error mismatch: got %v, expected %v", r, tc.expectedError)
@@ -114,9 +114,7 @@ func TestStringToFloat64(t *testing.T) {
 	}
 }
 
-// Updated TestStringToInt
 func TestStringToInt(t *testing.T) {
-
 	type testCase struct {
 		name           string
 		input          string
@@ -202,7 +200,6 @@ func TestStringToInt(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-
 			defer func() {
 				if r := recover(); r != nil {
 					if !tc.expectError {
