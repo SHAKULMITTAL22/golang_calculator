@@ -1,3 +1,3 @@
 module github.com/SHAKULMITTAL22/golang_calculator
 
-go 1.23.0
+go 1.23
