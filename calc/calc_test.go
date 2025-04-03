@@ -9,12 +9,6 @@ import (
 	testing "testing"
 )
 
-/*
-ROOST_METHOD_HASH=Absolute_f8af7505a1
-ROOST_METHOD_SIG_HASH=Absolute_4bad226818
-
-FUNCTION_DEF=func Absolute(num float64) float64
-*/
 func TestAbsolute(t *testing.T) {
 	tests := []struct {
 		name   string
@@ -72,12 +66,6 @@ func TestAbsolute(t *testing.T) {
 
 }
 
-/*
-ROOST_METHOD_HASH=Add_38f6779755
-ROOST_METHOD_SIG_HASH=Add_8e349a90e1
-
-FUNCTION_DEF=func Add(num1, num2 int) int
-*/
 func TestAdd(t *testing.T) {
 
 	type testCase struct {
@@ -178,12 +166,6 @@ func TestAdd(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=Factorial_89543dc467
-ROOST_METHOD_SIG_HASH=Factorial_9b038c83eb
-
-FUNCTION_DEF=func Factorial(n int) int
-*/
 func TestFactorial(t *testing.T) {
 
 	tests := []struct {
@@ -240,12 +222,6 @@ func TestFactorial(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=GCD_6cf0472095
-ROOST_METHOD_SIG_HASH=GCD_ab1c91475d
-
-FUNCTION_DEF=func GCD(a, b int) int
-*/
 func TestGcd(t *testing.T) {
 	type testCase struct {
 		name     string
@@ -294,12 +270,6 @@ func TestGcd(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=LCM_6035446662
-ROOST_METHOD_SIG_HASH=LCM_121c872fbf
-
-FUNCTION_DEF=func LCM(a, b int) int
-*/
 func TestLcm(t *testing.T) {
 
 	tests := []struct {
@@ -408,12 +378,6 @@ func TestLcm(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=Logarithm_546f6d96c4
-ROOST_METHOD_SIG_HASH=Logarithm_ddbb699678
-
-FUNCTION_DEF=func Logarithm(num, base float64) float64
-*/
 func TestLogarithm(t *testing.T) {
 	tests := []struct {
 		name      string
@@ -526,12 +490,6 @@ func TestLogarithm(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=Multiply_1585632006
-ROOST_METHOD_SIG_HASH=Multiply_d6ab1fb07f
-
-FUNCTION_DEF=func Multiply(num1, num2 float64) float64
-*/
 func TestMultiply(t *testing.T) {
 	tests := []struct {
 		name      string
@@ -641,12 +599,6 @@ func TestMultiply(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=Power_2542f03efe
-ROOST_METHOD_SIG_HASH=Power_feb9859574
-
-FUNCTION_DEF=func Power(base, exponent float64) float64
-*/
 func TestPower(t *testing.T) {
 
 	tests := []struct {
@@ -705,12 +657,6 @@ func TestPower(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=SinCosTan_c6521a7850
-ROOST_METHOD_SIG_HASH=SinCosTan_6ec04d6e93
-
-FUNCTION_DEF=func SinCosTan(angle float64) (sin, cos, tan float64)
-*/
 func TestSinCosTan(t *testing.T) {
 
 	testCases := []struct {
@@ -833,12 +779,6 @@ func TestSinCosTan(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=SquareRoot_600b6ad663
-ROOST_METHOD_SIG_HASH=SquareRoot_5aa1e1a6d6
-
-FUNCTION_DEF=func SquareRoot(num float64) float64
-*/
 func TestSquareRoot(t *testing.T) {
 	type testCase struct {
 		input          float64
@@ -893,12 +833,6 @@ func TestSquareRoot(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=Subtract_559013d27f
-ROOST_METHOD_SIG_HASH=Subtract_29b74c09c9
-
-FUNCTION_DEF=func Subtract(num1, num2 int) int
-*/
 func TestSubtract(t *testing.T) {
 	t.Helper()
 
@@ -1017,4 +951,55 @@ func TestSubtract(t *testing.T) {
 		})
 	}
 
+}
+
+/*
+ROOST_METHOD_HASH=Modulo_eb9c4baeed
+ROOST_METHOD_SIG_HASH=Modulo_09898f6fed
+
+FUNCTION_DEF=func Modulo(num1, num2 int) int
+*/
+func TestModulo(t *testing.T) {
+	type testCase struct {
+		name        string
+		num1        int
+		num2        int
+		expected    int
+		shouldPanic bool
+	}
+
+	testCases := []testCase{
+		{"Positive Dividend & Positive Divisor", 10, 3, 1, false},
+		{"Positive Dividend & Negative Divisor", 10, -3, 1, false},
+		{"Negative Dividend & Positive Divisor", -10, 3, -1, false},
+		{"Negative Dividend & Negative Divisor", -10, -3, -1, false},
+		{"Zero Dividend", 0, 3, 0, false},
+		{"Zero Divisor", 10, 0, 0, true},
+		{"Dividend Equals Divisor", 5, 5, 0, false},
+		{"Dividend Smaller Than Divisor", 3, 10, 3, false},
+		{"Large Numbers", 1000000000, 3, 1, false},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			defer func() {
+				if r := recover(); r != nil {
+					if tc.shouldPanic {
+						t.Logf("Expected panic occurred: %v", r)
+						return
+					}
+					t.Errorf("Unexpected panic occurred: %v", r)
+				}
+			}()
+
+			if !tc.shouldPanic {
+				result := Modulo(tc.num1, tc.num2)
+				if result != tc.expected {
+					t.Errorf("Expected: %d, Got: %d", tc.expected, result)
+				}
+			} else {
+				Modulo(tc.num1, tc.num2)
+			}
+		})
+	}
 }
