@@ -9,12 +9,6 @@ type testCase struct {
 	expectedPanicMessage string
 }
 
-/*
-ROOST_METHOD_HASH=SquareRoot_17095d9165
-ROOST_METHOD_SIG_HASH=SquareRoot_232943a56a
-
-FUNCTION_DEF=func SquareRoot(num float64) float64 // Square root (with error handling)
-*/
 func TestSquareRoot(t *testing.T) {
 
 	cases := []testCase{
