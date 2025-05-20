@@ -13,12 +13,6 @@ type squareRootTestCase struct {
 	isPanic  bool
 }
 
-/*
-ROOST_METHOD_HASH=Absolute_d231f0ab10
-ROOST_METHOD_SIG_HASH=Absolute_ec3c06e5a3
-
-FUNCTION_DEF=func Absolute(num float64) float64 // Absolute value
-*/
 func TestAbsolute(t *testing.T) {
 	scenarios := []struct {
 		desc            string
@@ -73,12 +67,6 @@ func TestAbsolute(t *testing.T) {
 
 }
 
-/*
-ROOST_METHOD_HASH=SquareRoot_17095d9165
-ROOST_METHOD_SIG_HASH=SquareRoot_232943a56a
-
-FUNCTION_DEF=func SquareRoot(num float64) float64 // Square root (with error handling)
-*/
 func TestSquareRoot(t *testing.T) {
 
 	testcases := []squareRootTestCase{
