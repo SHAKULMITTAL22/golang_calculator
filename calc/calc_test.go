@@ -5,12 +5,63 @@ import (
 	testing "testing"
 )
 
-/*
-ROOST_METHOD_HASH=Multiply_7a2824e2c7
-ROOST_METHOD_SIG_HASH=Multiply_0911ef76c1
+func TestFactorial(t *testing.T) {
 
-FUNCTION_DEF=func Multiply(num1, num2 float64) float64 // Multiply two floating-point numbers
-*/
+	tests := []struct {
+		name         string
+		input        int
+		expected     int
+		expectPanic  bool
+		panicMessage string
+	}{
+		{
+			name:     "Factorial of positive number",
+			input:    5,
+			expected: 120,
+		},
+		{
+			name:     "Factorial of zero",
+			input:    0,
+			expected: 1,
+		},
+		{
+			name:         "Factorial of negative number",
+			input:        -5,
+			expectPanic:  true,
+			panicMessage: "factorial is not defined for negative numbers",
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+
+			defer func() {
+				if r := recover(); r != nil {
+					if test.expectPanic {
+						if r != test.panicMessage {
+							t.Fatalf("expected panic message %q but got %q", test.panicMessage, r)
+						} else {
+							t.Logf("expected panic occurred: %v", r)
+						}
+					} else {
+						t.Fatalf("unexpected panic occurred: %v", r)
+					}
+				} else if test.expectPanic {
+					t.Fatal("expected a panic, but no panic occurred")
+				}
+			}()
+
+			result := Factorial(test.input)
+
+			if result != test.expected {
+				t.Errorf("expected %d but got %d", test.expected, result)
+			} else {
+				t.Logf("Success: expected %d, received %d", test.expected, result)
+			}
+		})
+	}
+}
+
 func TestMultiply(t *testing.T) {
 
 	testCases := []struct {
@@ -45,12 +96,6 @@ func TestMultiply(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=SquareRoot_17095d9165
-ROOST_METHOD_SIG_HASH=SquareRoot_232943a56a
-
-FUNCTION_DEF=func SquareRoot(num float64) float64 // Square root (with error handling)
-*/
 func TestSquareRoot(t *testing.T) {
 
 	testCases := []struct {
@@ -104,12 +149,6 @@ func TestSquareRoot(t *testing.T) {
 	}
 }
 
-/*
-ROOST_METHOD_HASH=Subtract_58eac52f91
-ROOST_METHOD_SIG_HASH=Subtract_b1211baa34
-
-FUNCTION_DEF=func Subtract(num1, num2 int) int // Subtract two integers
-*/
 func TestSubtract(t *testing.T) {
 
 	scenarios := []struct {
@@ -158,69 +197,6 @@ func TestSubtract(t *testing.T) {
 				t.Errorf("Failed: %s: Subtract(%d, %d): expected %d, received %d", tt.Description, tt.Num1, tt.Num2, tt.Expected, result)
 			} else {
 				t.Logf("Success: %s: Subtract(%d, %d): expected %d, received %d", tt.Description, tt.Num1, tt.Num2, tt.Expected, result)
-			}
-		})
-	}
-}
-
-/*
-ROOST_METHOD_HASH=Factorial_68fe6fb960
-ROOST_METHOD_SIG_HASH=Factorial_3d037eec72
-
-FUNCTION_DEF=func Factorial(n int) int // Factorial (Recursive)
-*/
-func TestFactorial(t *testing.T) {
-
-	tests := []struct {
-		name         string
-		input        int
-		expected     int
-		expectPanic  bool
-		panicMessage string
-	}{
-		{
-			name:     "Factorial of positive number",
-			input:    5,
-			expected: 120,
-		},
-		{
-			name:     "Factorial of zero",
-			input:    0,
-			expected: 1,
-		},
-		{
-			name:         "Factorial of negative number",
-			input:        -5,
-			expectPanic:  true,
-			panicMessage: "factorial is not defined for negative numbers",
-		},
-	}
-
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-
-			defer func() {
-				if r := recover(); r != nil {
-					if test.expectPanic {
-						if r != test.panicMessage {
-							t.Fatalf("expected panic message %q but got %q", test.panicMessage, r)
-						} else {
-							t.Logf("expected panic occurred: %v", r)
-						}
-					} else {
-						t.Fatalf("unexpected panic occurred: %v", r)
-					}
-				} else if test.expectPanic {
-					t.Fatal("expected a panic, but no panic occurred")
-				}
-			}()
-
-			result := Factorial(test.input)
-
-			if result != test.expected {
-				t.Errorf("expected %d but got %d", test.expected, result)
-			} else {
-				t.Logf("Success: expected %d, received %d", test.expected, result)
 			}
 		})
 	}
