@@ -42,6 +42,8 @@ Details:
     Validation:
       The choice of assertion is to test the function's correctness in handling negative numbers, which is error handling in this case.
       This test is important as it tests the function's resilience and ability to correctly handle inputs outside of its domain.
+
+roost_feedback [22/05/2025, 8:21:07 AM]:add\ssome\scomments\sin\sthe\scode.
 */
 
 // ********RoostGPT********
@@ -50,8 +52,10 @@ package calc
 
 import "testing"
 
+// TestFactorial is a test function for testing the Factorial function in the calc package
 func TestFactorial(t *testing.T) {
 
+	// defining the test cases
 	tests := []struct {
 		name         string
 		input        int
@@ -77,9 +81,11 @@ func TestFactorial(t *testing.T) {
 		},
 	}
 
+	// iteration over the test cases
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 
+			// defer function to handle panic and check its validity
 			defer func() {
 				if r := recover(); r != nil {
 					if test.expectPanic {
@@ -96,8 +102,10 @@ func TestFactorial(t *testing.T) {
 				}
 			}()
 
+			// call the Factorial function with the input from the test case
 			result := Factorial(test.input)
 
+			// check the result of the Factorial function
 			if result != test.expected {
 				t.Errorf("expected %d but got %d", test.expected, result)
 			} else {
