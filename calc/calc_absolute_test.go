@@ -56,6 +56,8 @@ Scenario 5: Absolute of negative smallest non-zero number in Go.
     Assert: Check that the return value of Absolute(math.SmallestNonzeroFloat64) is equal to math.SmallestNonzeroFloat64.
   Validation:
     The absolute value of a smallest non zero number is the smallest non zero number itself, this test asserts that the function can handle smallest non zero numbers.
+
+roost_feedback [23/05/2025, 7:15:01 PM]:add some coments in the file\n\n
 */
 
 // ********RoostGPT********
@@ -69,10 +71,11 @@ import (
 )
 
 func TestAbsolute(t *testing.T) {
+	// Define the struct for the test cases
 	tests := []struct {
-		name   string
-		num    float64
-		result float64
+		name   string  // Name of the test case
+		num    float64 // Input for the test case
+		result float64 // Expected result of the test case
 	}{
 		{
 			name:   "Absolute of Zero",
@@ -101,15 +104,19 @@ func TestAbsolute(t *testing.T) {
 		},
 	}
 
+	// Iterate over the test cases
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 
+			// If there's any panic during the test, recover and fail the test
 			defer func() {
 				if r := recover(); r != nil {
 					t.Logf("Panic encountered in TestAbsolute, failing this test case. %v\n%s", r, string(debug.Stack()))
 					t.Fail()
 				}
 			}()
+
+			// Call the method under test and check the result
 			got := Absolute(tt.num)
 			if got != tt.result {
 				t.Errorf("Absolute() = %v, want %v", got, tt.result)
