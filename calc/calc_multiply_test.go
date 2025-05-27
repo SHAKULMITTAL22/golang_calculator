@@ -58,9 +58,13 @@ Assert: AssertEqual on the returned float64 with 0.
 Validation: The multiplication with zero should always equal zero. The test will confirm that the function handles zero cases correctly.
 
 Note: These are simple tests for a simple function. While for larger or more complex functions, more advanced testing techniques may apply. For instance, when working with shared state, parallelism issues, or functions which have side effects.
+
+roost_feedback [27/05/2025, 3:51:36 AM]:add\ssome\scomments\sin\sthe\stest\sfile
 */
 
 // ********RoostGPT********
+
+// Updated Golang test file with comments.
 
 package calc
 
@@ -70,7 +74,7 @@ import (
 )
 
 func TestMultiply(t *testing.T) {
-
+	// Define table test cases for multiplication function.
 	testCases := []struct {
 		name           string
 		num1           float64
@@ -86,14 +90,17 @@ func TestMultiply(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
+			// Using defer function to recover from any potential panics during test execution.
 			defer func() {
 				if r := recover(); r != nil {
 					t.Logf("Panic encountered so failing test. %v", r)
 					t.Fail()
 				}
 			}()
+			// Execute multiplication function.
 			result := Multiply(tc.num1, tc.num2)
 
+			// Assert the result with expected result.
 			if math.Abs(result-tc.expectedResult) > 1e-9 {
 				t.Fatalf("Test Failed. Expected %v, got %v", tc.expectedResult, result)
 			} else {
