@@ -50,6 +50,8 @@ Act: Invoke the Subtract function with the two integers
 Assert: Use Go's testing framework to verify that the result is -5.
 Validation:
 The subtraction function needs to correctly handle the scenario of subtracting a number from zero, leading to a negative result. This test scenario checks this functionality.
+
+roost_feedback [27/05/2025, 9:22:08 AM]:Add\ssome\stest\scomments
 */
 
 // ********RoostGPT********
@@ -58,8 +60,10 @@ package calc
 
 import "testing"
 
+// Test Scenario: Subtract Function
 func TestSubtract(t *testing.T) {
 
+	// Test data for Subtraction function
 	scenarios := []struct {
 		Description string
 		Num1        int
@@ -92,15 +96,18 @@ func TestSubtract(t *testing.T) {
 		},
 	}
 
+	// Iterator over test cases
 	for _, tt := range scenarios {
 		t.Run(tt.Description, func(t *testing.T) {
 			defer func() {
+				// Panic recovery handler
 				if r := recover(); r != nil {
 					t.Logf("Panic encountered in test: %v\n", r)
 					t.Fail()
 				}
 			}()
 
+			// Invoking the function under test
 			result := Subtract(tt.Num1, tt.Num2)
 			if result != tt.Expected {
 				t.Errorf("Failed: %s: Subtract(%d, %d): expected %d, received %d", tt.Description, tt.Num1, tt.Num2, tt.Expected, result)
