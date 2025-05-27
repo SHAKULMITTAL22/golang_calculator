@@ -41,6 +41,8 @@ Execution:
 Validation:
     In this case, the assertion verifies that a panic occurs when the function is handed a negative number, which is the correct behavior. The test is important because it checks that the function behaves correctly when it encounters this error condition.
 ```
+
+roost_feedback [27/05/2025, 1:16:36 PM]:add some comments in the file\n\n\n\n\n
 */
 
 // ********RoostGPT********
@@ -51,11 +53,13 @@ import (
 	"testing"
 )
 
+// TestSquareRoot includes test scenarios for verifying the square root computation.
 func TestSquareRoot(t *testing.T) {
 	type args struct {
 		num float64
 	}
 
+	// Define the testing scenarios with the corresponding expected results.
 	tests := []struct {
 		name    string
 		args    args
@@ -63,32 +67,39 @@ func TestSquareRoot(t *testing.T) {
 		wantErr bool
 	}{
 		{
+			// Test with a positive integer as input.
 			name: "Scenario 1: Testing the square root of a positive number",
 			args: args{num: 4},
 			want: 2,
 		},
 		{
+			// Test with zero as input.
 			name: "Scenario 2: Testing the square root of zero",
 			args: args{num: 0},
 			want: 0,
 		},
 		{
+			// Test with a negative integer as input.
 			name:    "Scenario 3: Testing the square root of a negative number",
 			args:    args{num: -4},
 			wantErr: true,
 		},
 	}
 
+	// Iterate over each test scenario.
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			defer func() {
+				// Recovery function for handling panic.
 				if r := recover(); r != nil {
 					t.Logf("Panic encountered so failing test. %v", r)
+					// Indicate a failed test if not expecting an error.
 					if tt.wantErr == false {
 						t.Fail()
 					}
 				}
 			}()
+			// invoke the SquareRoot function with the test scenario's input and compare the result with the expected result.
 			if got := SquareRoot(tt.args.num); !tt.wantErr && got != tt.want {
 				t.Errorf("SquareRoot() = %v, want %v", got, tt.want)
 			}
