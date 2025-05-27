@@ -46,6 +46,8 @@ Execution:
   Assert: Verify that the return value is correct by squaring the result and comparing it to the original large number.
 Validation:
   This test is to ensure our function can handle large input values and still produce the correct output.
+
+roost_feedback [27/05/2025, 3:00:05 PM]:add some test coments in the file\n\n\n\n
 */
 
 // ********RoostGPT********
@@ -57,13 +59,16 @@ import (
 	"testing"
 )
 
+// TestSquareRoot is a table-driven test that checks the functionality of the SquareRoot function.
+// The SquareRoot function should correctly calculate the square root of the provided input
+// and should also handle edge cases such as input being a negative number, zero, or a very large number.
 func TestSquareRoot(t *testing.T) {
 
 	tests := []struct {
-		name        string
-		input       float64
-		want        float64
-		shouldPanic bool
+		name        string  // name uniquely identifies each test case
+		input       float64 // input is the parameter that will be passed to the SquareRoot function
+		want        float64 // want is the expected result from the SquareRoot function
+		shouldPanic bool    // shouldPanic indicates if the function is expected to panic with the provided input
 	}{
 		{
 			name:        "Testing with a positive number",
@@ -91,10 +96,14 @@ func TestSquareRoot(t *testing.T) {
 		},
 	}
 
+	// This loop iterates over each test case in the tests slice.
+	// For each test case, it runs the test in its own scope (t.Run), which allows for parallel execution of test cases.
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Logf("Running Test - %s", tc.name)
 
+			// The deferred function captures any panic that may occur during the execution of the SquareRoot function.
+			// If a panic occurs, it is logged and the test fails unless the panic was expected (indicated by tc.shouldPanic).
 			defer func() {
 				if r := recover(); r != nil {
 					if tc.shouldPanic {
@@ -111,6 +120,9 @@ func TestSquareRoot(t *testing.T) {
 				}
 			}()
 
+			// The execution of the SquareRoot function.
+			// If the result does not match the expected output and the function did not panic when it should have,
+			// the test is considered a failure.
 			got := SquareRoot(tc.input)
 			if got != tc.want && !tc.shouldPanic {
 				t.Errorf("SquareRoot(%v) = %v; want %v - Test Failed", tc.input, got, tc.want)
