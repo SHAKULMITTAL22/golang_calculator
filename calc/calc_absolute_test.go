@@ -42,16 +42,20 @@ Scenario 3: Test Absolute function with Zero
   Validation:
     This test is useful in verifying that the Absolute function can correctly handle cases where zero is the passed argument. The expected return value should be zero, as zero is neither negative nor positive.
     The assertion checks that the returned value equals the input value.
+
+roost_feedback [27/05/2025, 1:21:50 PM]:add some comments to the file please\n\n\n\n
 */
 
 // ********RoostGPT********
 
+// package calc includes all required calculation functions
 package calc
 
 import (
-	"testing"
+	"testing" // testing is a package that allows writing and running tests in go
 )
 
+// struct for test cases
 func TestAbsolute(t *testing.T) {
 	tests := []struct {
 		name string
@@ -59,33 +63,37 @@ func TestAbsolute(t *testing.T) {
 		want float64
 	}{
 		{
-			name: "Test Absolute function with Positive Number",
+			name: "Test Absolute function with Positive Number", // test case for positive number
 			num:  3.4,
 			want: 3.4,
 		},
 		{
-			name: "Test Absolute function with Negative Number",
+			name: "Test Absolute function with Negative Number", // test case for negative number
 			num:  -3.7,
 			want: 3.7,
 		},
 		{
-			name: "Test Absolute function with Zero",
+			name: "Test Absolute function with Zero", // test case for zero
 			num:  0,
 			want: 0,
 		},
 	}
 
+	// iterate through each test case
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
+			// deferred function to recover if a panic occurs
 			defer func() {
 				if r := recover(); r != nil {
-					t.Logf("Panic encountered so failing test. %v", r)
-					t.Fail()
+					t.Logf("Panic encountered so failing test. %v", r) // log message when panic happens
+					t.Fail()                                           // fail this test case due to panic
 				}
 			}()
 
+			// get result from Absolute function
 			got := Absolute(test.num)
 
+			// compare result with expected value
 			if got != test.want {
 				t.Errorf("Absolute(%v) got = %v, want = %v", test.num, got, test.want)
 			} else {
