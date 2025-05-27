@@ -57,6 +57,8 @@ Scenario 5: Float64 Infinity Value
   Validation:
     Despite the input number being infinity, the absolute function should return the same value. This test verifies how the absolute function performs under extreme conditions.
 
+
+roost_feedback [27/05/2025, 9:24:25 AM]:add some comments to the test file\n\n
 */
 
 // ********RoostGPT********
@@ -69,8 +71,11 @@ import (
 	"testing"
 )
 
+// TestAbsolute is a table-driven test that checks the functionality of Absolute() function.
+// It tests for positive numbers, negative numbers, zero, max float64 numbers and float64 infinity values.
 func TestAbsolute(t *testing.T) {
 
+	// Initialising a slice of test cases. Each test case is a struct, with name, input and want as its members.
 	var tests = []struct {
 		name  string
 		input float64
@@ -83,9 +88,13 @@ func TestAbsolute(t *testing.T) {
 		{"Float64 Infinity Value", math.Inf(1), math.Inf(1)},
 	}
 
+	// Iterating over each test case
 	for _, tt := range tests {
+		// Subtest for each of the test case
 		t.Run(tt.name, func(t *testing.T) {
 
+			// Deferring the function to handle any panic situation that may arise during the execution of the test.
+			// If any panic occurs, it logs the error and fails the test.
 			defer func() {
 				if r := recover(); r != nil {
 					t.Logf("Panic encountered so failing test. %v\n%s", r, string(debug.Stack()))
@@ -93,12 +102,14 @@ func TestAbsolute(t *testing.T) {
 				}
 			}()
 
+			// Calling the Absolute() function and storing the return value.
 			got := Absolute(tt.input)
 
+			// Asserting if the result of the function call matches the expected output.
 			if got != tt.want {
-				t.Errorf("Absolute() = %v, want %v", got, tt.want)
+				t.Errorf("Absolute() = %v, want %v", got, tt.want) // Logging error in case of test failure.
 			} else {
-				t.Logf("Success: %s\n Absolute(%v) = %v, as expected.", tt.name, tt.input, got)
+				t.Logf("Success: %s\n Absolute(%v) = %v, as expected.", tt.name, tt.input, got) // Logging success in case of test passes.
 			}
 		})
 	}
