@@ -8,3 +8,4 @@ const add=require('./math');
     expect(actual).toBe(expected);
  
  });
+ console.log('All tests passed!');
