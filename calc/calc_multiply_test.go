@@ -166,6 +166,8 @@ Details:
 
 
 roost_feedback [14/07/2025, 10:12:24 AM]:iadd some comments to the file\n\n
+
+roost_feedback [14/07/2025, 1:30:56 PM]:add some more negative scenarios and remove all the comments from the file\n\n\n\n
 */
 
 // ********RoostGPT********
@@ -204,9 +206,13 @@ func TestMultiply(t *testing.T) {
 		{"Multiply infinity and a finite number", math.Inf(1), 8.5, math.Inf(1), false, true},
 		{"Multiply infinity with -infinity", math.Inf(1), math.Inf(-1), -math.Inf(1), false, true},
 		{"Multiply zero by infinity", 0.0, math.Inf(1), math.NaN(), true, false},
-		// Added additional edge case tests
 		{"Multiply near zero numbers", 1e-100, 1e-100, 1e-200, false, false},
 		{"Multiply very large and very small numbers", 1e+200, 1e-200, 1.0, false, false},
+		{"Multiply positive number with a very small negative value", 8.5, -1e-200, -8.5e-200, false, false},
+		{"Multiply negative number with infinity", -7.3, math.Inf(1), -math.Inf(1), false, true},
+		{"Multiply NaN with NaN", math.NaN(), math.NaN(), math.NaN(), true, false},
+		{"Multiply negative fractional number with zero", -0.25, 0.0, 0.0, false, false},
+		{"Multiply very large number with NaN", 1e+300, math.NaN(), math.NaN(), true, false},
 	}
 
 	for _, tt := range tests {
