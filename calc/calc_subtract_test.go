@@ -139,6 +139,8 @@ Execution:
 Validation:
   Explain: Handling integer limits is crucial to avoid unexpected behavior. The assertion ensures the function remains stable under extreme conditions.
 
+
+roost_feedback [14/07/2025, 4:46:54 AM]:add\ssome\smore\scomments\sto\sthe\sfile
 */
 
 // ********RoostGPT********
@@ -231,6 +233,18 @@ func TestSubtract(t *testing.T) {
 			num1:     math.MaxInt32,
 			num2:     1,
 			expected: math.MaxInt32 - 1,
+		},
+		{
+			desc:     "Scenario 13: Testing Subtraction Resulting in Zero",
+			num1:     1,
+			num2:     1,
+			expected: 0,
+		},
+		{
+			desc:     "Scenario 14: Testing Maximum and Minimum Integer Boundary",
+			num1:     math.MaxInt32,
+			num2:     math.MinInt32,
+			expected: math.MaxInt32 - math.MinInt32,
 		},
 	}
 
